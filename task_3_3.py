@@ -141,8 +141,15 @@ class task_3_3:
         # >>>>>>>>>>>>>>> YOUR CODE HERE <<<<<<<<<<<<<<<
         # TODO: 
         # >>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<
-        delay = self.get_pcc(s1, s2)
-        res = delay >= 0
+        fs = 10
+        threshold = 0.1
+        cross_corr = np.correlate(s1 - s1.mean(), s2 - s2.mean(), mode='full')
+        n1, n2 = len(s1), len(s2)
+        lags = np.arange(-(n2 - 1), n1)
+        max_idx = np.argmax(cross_corr)
+        best_lag = lags[max_idx]
+        delay = best_lag / fs
+        res = abs(delay) <= threshold
         delay = np.abs(delay).astype(np.float64)
         res = bool(res)
         return delay, res
