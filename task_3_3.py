@@ -52,6 +52,13 @@ class task_3_3:
         # >>>>>>>>>>>>>>> YOUR CODE HERE <<<<<<<<<<<<<<<
         # TODO: Implement PCC using np.correlate:
         # >>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<
+        ms1 = s1 - np.mean(s1)
+        ms2 = s2 - np.mean(s2)
+        base = np.sqrt(np.sum(ms1**2) * np.sum(ms2**2))
+        acf = np.correlate(ms1, ms2, 'full')
+        acf = acf[len(acf)//2]
+        rho = acf / base
+        pcc = rho
         pcc = np.float64(pcc)
         return pcc
 
@@ -76,6 +83,8 @@ class task_3_3:
         # >>>>>>>>>>>>>>> YOUR CODE HERE <<<<<<<<<<<<<<<
         # TODO: Use get_pcc to compute PCC, set res True if PCC < 0
         # >>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<
+        pcc = self.get_pcc(m1, m2)
+        res = pcc < 0
         pcc = np.float64(pcc)
         res = bool(res)
         return pcc, res
@@ -101,6 +110,8 @@ class task_3_3:
         # >>>>>>>>>>>>>>> YOUR CODE HERE <<<<<<<<<<<<<<<
         # TODO: Use get_pcc to compute PCC, set res True if PCC > 0
         # >>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<
+        pcc = self.get_pcc(t1, t2)
+        res = pcc > 0
         pcc = np.float64(pcc)
         res = bool(res)
         return pcc, res
@@ -130,6 +141,8 @@ class task_3_3:
         # >>>>>>>>>>>>>>> YOUR CODE HERE <<<<<<<<<<<<<<<
         # TODO: 
         # >>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<
+        delay = self.get_pcc(s1, s2)
+        res = delay >= 0
         delay = np.abs(delay).astype(np.float64)
         res = bool(res)
         return delay, res
@@ -155,6 +168,11 @@ class task_3_3:
         # >>>>>>>>>>>>>>> YOUR CODE HERE <<<<<<<<<<<<<<<
         # TODO: 
         # >>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<
+        window = len(p)
+        best_pcc = []
+        for i in range(0, len(s) - window, 100):
+            best_pcc.append(self.get_pcc(s[i:i+window], p))
+        start_idx = np.argmax(best_pcc)
         start_idx = int(start_idx)
         return start_idx
 

@@ -192,10 +192,5 @@ class task_3_2:
     
 
 if __name__ == "__main__":
-    # import doctest
-    # doctest.testmod(verbose=True)
-    task = task_3_2()
-    # br = task.get_br_1()
-    # print(br)
-    hr = task.get_hr_2()
-    print(hr, sorted(hr[0]))
+    import doctest
+    doctest.testmod(verbose=True)
