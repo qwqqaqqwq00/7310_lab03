@@ -169,7 +169,6 @@ class task_3_2:
         """
         s_t = self.ecg_data["values"] # signal values
         fs = self.ecg_data["fs"] # sampling frequency
-        print(fs)
         
         h_t = np.array([], dtype=np.float64)
         
